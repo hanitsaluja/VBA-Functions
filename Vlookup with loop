@@ -1,0 +1,20 @@
+Sub VlookupLoop()
+Application.ScreenUpdating = False
+''Define sheets
+Set wb = Workbooks("Workbook1.xlsm")
+Set wb2 = Workbooks("Workbook2.xlsx")
+Set ws1 = wb2.Sheets("Sheet1")
+LastRow = ws1.Range("F1").End(xlDown).Row
+Set ws2 = wb.Sheets("Sheet1")
+LastRow2 = ws2.Range("A1").End(xlDown).Row
+wb.Activate
+ws2.Activate
+''For loop with Vlookup
+For i = 2 To LastRow2
+On Error Resume Next
+ws2.Range("B" & i).Value = Application.WorksheetFunction.Vlookup(ws2.Range("A" & i).Value, ws1.Range("A1:Z" & LastRow), 17, 0)
+On Error GoTo 0
+Next
+wb.Save
+Application.ScreenUpdating = True
+End Sub
