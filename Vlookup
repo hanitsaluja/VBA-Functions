@@ -1,0 +1,18 @@
+Sub Vlookup()
+Application.ScreenUpdating = False
+''Define new workbooks and worksheets
+Set wb = Workbooks("Workbook1.xlsm")
+Set wb2 = Workbooks("Workbook2.xlsx")
+Set ws1 = wb2.Sheets("Sheet1")
+''Define data limit
+LastRow = ws1.Range("F1").End(xlDown).Row
+Set ws2 = wb.Sheets("Sheet1")
+
+wb.Activate
+ws2.Activate
+
+''Vlookup function
+ws2.Range("B2").Value = Application.WorksheetFunction.Vlookup(ws2.Range("A2").Value, ws1.Range("A1:Z" & LastRow), 17, 0)
+wb.Save
+Application.ScreenUpdating = True
+End Sub
