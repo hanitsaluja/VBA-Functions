@@ -1,0 +1,35 @@
+Sub SendEmail()
+Application.ScreenUpdating = False
+Dim wb As Workbook
+Dim ws As Worksheet
+Set wb = Workbooks("Workbook1.xlsm")
+Set ws1 = wb.Sheets("Sheet1")
+LastRow1 = ws1.Range("A3").End(xlDown).Row
+EditDate = Format(Now(), "dd.mm.yyyy")
+'''Providing all the details including from, To, cc, subject, body,
+Set outlook = CreateObject("Outlook.Application")
+Set newEmail = outlook.CreateItem(0)
+With newEmail
+.Display
+End With
+With newEmail
+    .SentOnBehalfOfName = "Groupsampleemail@sampleemail.com"
+    .To = "sampleemail@sampleemail.com"
+    .CC = "sampleemail@sampleemail.com"
+    .BCC = ""
+    .Subject = "Daily result report  - " & EditDate
+'''Providing the required text
+    .body = "Please provide the required body" & vbCrLf & "Thanks" & vbCrLf & "Hanit"
+    Set xInspect = newEmail.GetInspector
+    Set pageEditor = xInspect.WordEditor
+    ws1.Range("A1:C" & LastRow1).Copy
+'''Adding the table
+    pageEditor.Application.Selection.Start = Len(.body)
+    pageEditor.Application.Selection.End = pageEditor.Application.Selection.Start
+    pageEditor.Application.Selection.PasteAndFormat (wdFormatPlainText)
+.Display
+End With
+Set newEmail = Nothing
+Set outlook = Nothing
+Application.ScreenUpdating = True
+End Sub
