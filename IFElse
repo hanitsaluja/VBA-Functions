@@ -1,0 +1,16 @@
+Sub IFElse()
+Application.ScreenUpdating = False
+''Defining sheets
+Dim wb As Workbook
+Dim ws1 As Worksheet
+Set wb = Workbooks("Workbook1.xlsm")
+Set ws1 = wb.Sheets("Sheet1")
+wb.Activate
+ws1.Activate
+''Verifying 2:2 is not blank
+If ws1.Range("D2") = "" And ws1.Range("C2") = "" And ws1.Range("B2") = "" And ws1.Range("A2") = "" Then
+Rows("2:2").Delete Shift:=xlUp
+Else
+End If
+Application.ScreenUpdating = True
+End Sub
