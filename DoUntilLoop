@@ -1,0 +1,23 @@
+Sub DoUntilLoop()
+Application.ScreenUpdating = False
+''Defining sheets
+Dim wb As Workbook
+Dim ws1 As Worksheet
+Set wb = Workbooks("Workbook1.xlsm")
+Set ws1 = wb.Sheets("Sheet1")
+
+''Verifying if condition met
+wb.Activate
+ws1.Activate
+Dim i As Integer
+i = 2
+Do Until ws1.Range("A" & i).Value = ""
+    If ws1.Range("B" & i) > 50 Then
+        ws1.Range("C" & i) = "True"
+        Else
+        ws1.Range("C" & i) = "False"
+    End If
+i = i + 1
+Loop
+Application.ScreenUpdating = True
+End Sub
