@@ -1,0 +1,37 @@
+Sub WebScrapping()
+
+Dim i As Object
+
+EditDate = Format(Now(), "ddmm")
+Yesterday = CDate(Evaluate("WORKDAY(TODAY(),-1)"))
+EditDate2 = Format(Yesterday, "ddmm")
+'''Login
+Set i = CreateObject("InternetExplorer.Application")
+Application.Wait (Now + TimeValue("00:00:02"))
+i.Visible = True
+i.navigate ("https://somewebsite/someextension/")
+Do While i.readyState <> READYSTATE_COMPLETE
+Loop
+
+Dim idoc As MSHTML.HTMLDocument
+Set idoc = i.document
+'''Provide usernamen and password
+idoc.all.UserName.Value = "Username"
+idoc.all.Password.Value = "Password"
+
+Do While i.readyState <> READYSTATE_COMPLETE
+Loop
+Application.Wait (Now + TimeValue("00:00:04"))
+Dim ele As MSHTML.IHTMLElement
+
+Dim eles As MSHTML.IHTMLElementCollection
+
+Set eles = idoc.getElementsByTagName("input")
+'''Click on the button
+For Each ele In eles
+If ele.ID = "html_but_login" Then
+    ele.Click
+Else
+End If
+Next ele
+End Sub
